@@ -19,7 +19,7 @@
         .item-desc { flex: 1; padding-right: 15px; font-size: 0.95rem; }
         .item-select { width: 80px; }
         
-        /* Fix untuk Select2 supaya sama tinggi dengan input lain */
+        /* Fix Select2 Height */
         .select2-container--bootstrap-5 .select2-selection { border-color: #dee2e6; }
     </style>
 </head>
@@ -33,9 +33,9 @@
     </div>
 
     <form id="skpmgForm">
-        <div class="row mb-4">
-            <div class="col-md-12 mb-3">
-                <label>Nama Guru</label>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <label class="form-label fw-bold">Nama Guru</label>
                 <select name="nama" id="senaraiGuru" class="form-select" required>
                     <option value="">-- Taip untuk cari nama guru --</option>
                     <option value="AB AZIZ BIN IBRAHIM">AB AZIZ BIN IBRAHIM</option>
@@ -179,21 +179,93 @@
                     <option value="ZURAINAH BT MOHD GHAZALI">ZURAINAH BT MOHD GHAZALI</option>
                 </select>
             </div>
+        </div>
 
-            <div class="col-md-6 mb-2"><label>Mata Pelajaran</label><input type="text" name="mp" class="form-control" required></div>
-            <div class="col-md-3 mb-2"><label>Kelas</label><input type="text" name="kelas" class="form-control" required></div>
+        <div class="row mb-3">
+            <div class="col-md-6 mb-2">
+                <label class="form-label fw-bold">Mata Pelajaran</label>
+                <select name="mp" id="senaraiSubjek" class="form-select" required>
+                    <option value="">-- Cari Subjek --</option>
+                    <option value="BAHASA MELAYU">BAHASA MELAYU</option>
+                    <option value="BAHASA INGGERIS">BAHASA INGGERIS</option>
+                    <option value="BAHASA ARAB">BAHASA ARAB</option>
+                    <option value="BAHASA CINA">BAHASA CINA</option>
+                    <option value="BAHASA PERANCIS">BAHASA PERANCIS</option>
+                    <option value="SEJARAH">SEJARAH</option>
+                    <option value="SAINS">SAINS</option>
+                    <option value="MATEMATIK">MATEMATIK</option>
+                    <option value="GEOGRAFI">GEOGRAFI</option>
+                    <option value="PENDIDIKAN SENI VISUAL">PENDIDIKAN SENI VISUAL</option>
+                    <option value="PENDIDIKAN JASMANI DAN KESIHATAN">PENDIDIKAN JASMANI DAN KESIHATAN</option>
+                    <option value="REKA BENTUK DAN TEKNOLOGI">REKA BENTUK DAN TEKNOLOGI</option>
+                    <option value="HIFZ AL-QURAN">HIFZ AL-QURAN</option>
+                    <option value="MAHARAT AL-QURAN">MAHARAT AL-QURAN</option>
+                    <option value="FIZIK">FIZIK</option>
+                    <option value="KIMIA">KIMIA</option>
+                    <option value="BIOLOGI">BIOLOGI</option>
+                    <option value="MATEMATIK TAMBAHAN">MATEMATIK TAMBAHAN</option>
+                    <option value="PENDIDIKAN ISLAM">PENDIDIKAN ISLAM</option>
+                    <option value="PENDIDIKAN SYARIAH ISLAMIAH">PENDIDIKAN SYARIAH ISLAMIAH</option>
+                    <option value="PENDIDIKAN AL-QURAN DAN SUNNAH">PENDIDIKAN AL-QURAN DAN SUNNAH</option>
+                    <option value="GRAFIK KOMUNIKASI TEKNIKAL">GRAFIK KOMUNIKASI TEKNIKAL</option>
+                    <option value="PRINSIP PERAKAUNAN">PRINSIP PERAKAUNAN</option>
+                    <option value="MUET">MUET</option>
+                    <option value="PENGAJIAN AM">PENGAJIAN AM</option>
+                    <option value="SYARIAH">SYARIAH</option>
+                    <option value="TAHFIZ AL-QURAN (T6)">TAHFIZ AL-QURAN (T6)</option>
+                </select>
+            </div>
+
+            <div class="col-md-3 mb-2">
+                <label class="form-label fw-bold">Kelas</label>
+                <select name="kelas" id="senaraiKelas" class="form-select" required>
+                    <option value="">-- Cari Kelas --</option>
+                    <option value="1 HAFS">1 HAFS</option>
+                    <option value="1 SHU'BAH">1 SHU'BAH</option>
+                    <option value="1 QALUN">1 QALUN</option>
+                    <option value="1 WARSH">1 WARSH</option>
+                    <option value="1 AL-BAZZI">1 AL-BAZZI</option>
+                    <option value="2 HAFS">2 HAFS</option>
+                    <option value="2 SHU'BAH">2 SHU'BAH</option>
+                    <option value="2 QALUN">2 QALUN</option>
+                    <option value="2 WARSH">2 WARSH</option>
+                    <option value="2 AL-BAZZI">2 AL-BAZZI</option>
+                    <option value="3 HAFS">3 HAFS</option>
+                    <option value="3 SHU'BAH">3 SHU'BAH</option>
+                    <option value="3 QALUN">3 QALUN</option>
+                    <option value="3 WARSH">3 WARSH</option>
+                    <option value="3 AL-BAZZI">3 AL-BAZZI</option>
+                    <option value="4 AL-RAZZI">4 AL-RAZZI</option>
+                    <option value="4 AL-ZAHRAWI">4 AL-ZAHRAWI</option>
+                    <option value="4 IBN SINA">4 IBN SINA</option>
+                    <option value="4 AL-BIRUNI">4 AL-BIRUNI</option>
+                    <option value="4 IBN KHALDUN">4 IBN KHALDUN</option>
+                    <option value="5 AL-RAZZI">5 AL-RAZZI</option>
+                    <option value="5 AL-ZAHRAWI">5 AL-ZAHRAWI</option>
+                    <option value="5 IBN SINA">5 IBN SINA</option>
+                    <option value="5 AL-BIRUNI">5 AL-BIRUNI</option>
+                    <option value="5 IBN KHALDUN">5 IBN KHALDUN</option>
+                    <option value="6 IBN AMIR">6 IBN AMIR</option>
+                    <option value="6 IBN KATHIR">6 IBN KATHIR</option>
+                    <option value="6 IBN JAMMAZ">6 IBN JAMMAZ</option>
+                    <option value="6 IBN WARDAN">6 IBN WARDAN</option>
+                    <option value="PRASEKOLAH">PRASEKOLAH</option>
+                </select>
+            </div>
             
             <div class="col-md-3 mb-2">
-                <label>Jenis Pencerapan</label>
+                <label class="form-label fw-bold">Jenis Pencerapan</label>
                 <select name="sesi" class="form-select">
                     <option value="KENDIRI">KENDIRI</option>
                     <option value="PERTAMA">PERTAMA</option>
                     <option value="KEDUA">KEDUA</option>
                 </select>
             </div>
+        </div>
 
-            <div class="col-md-12 mb-2">
-                <label>Tarikh Pencerapan</label>
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <label class="form-label fw-bold">Tarikh Pencerapan</label>
                 <input type="date" name="tarikh" class="form-control" required>
             </div>
         </div>
@@ -261,11 +333,27 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-    // 1. Aktifkan Fungsi Carian pada Dropdown Nama
+    // 1. Aktifkan Fungsi Carian untuk 3 Kotak (Nama, Subjek, Kelas)
     $(document).ready(function() {
+        
+        // Setup dropdown Nama Guru
         $('#senaraiGuru').select2({
-            theme: 'bootstrap-5', // Gunakan tema Bootstrap supaya cantik
+            theme: 'bootstrap-5',
             placeholder: "-- Taip untuk cari nama guru --",
+            allowClear: true
+        });
+
+        // Setup dropdown Mata Pelajaran
+        $('#senaraiSubjek').select2({
+            theme: 'bootstrap-5',
+            placeholder: "-- Cari Subjek --",
+            allowClear: true
+        });
+
+        // Setup dropdown Kelas
+        $('#senaraiKelas').select2({
+            theme: 'bootstrap-5',
+            placeholder: "-- Cari Kelas --",
             allowClear: true
         });
     });
@@ -280,10 +368,15 @@
     form.addEventListener('submit', e => {
         e.preventDefault();
         
-        // Semak jika nama guru dipilih
+        // Semak validasi 3 kotak utama
         if ($('#senaraiGuru').val() === "") {
-            alert("Sila pilih Nama Guru!");
-            return;
+            alert("Sila pilih Nama Guru!"); return;
+        }
+        if ($('#senaraiSubjek').val() === "") {
+            alert("Sila pilih Mata Pelajaran!"); return;
+        }
+        if ($('#senaraiKelas').val() === "") {
+            alert("Sila pilih Kelas!"); return;
         }
 
         btn.disabled = true;
@@ -293,9 +386,11 @@
             .then(response => {
                 alert("Tahniah! Data telah berjaya disimpan.");
                 
-                // Reset form dan reset juga dropdown Select2
+                // Reset form dan reset juga semua dropdown Select2
                 form.reset();
                 $('#senaraiGuru').val(null).trigger('change'); 
+                $('#senaraiSubjek').val(null).trigger('change'); 
+                $('#senaraiKelas').val(null).trigger('change'); 
                 
                 btn.disabled = false;
                 btn.innerText = "HANTAR SKOR";
