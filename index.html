@@ -1,89 +1,26 @@
-<!DOCTYPE html>
-<html lang="ms">
-<head>
-    <meta charset="UTF-8">
-    <title>Borang Pencerapan Standard 4</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .container { max-width: 800px; margin: auto; border: 1px solid #ccc; padding: 20px; }
-        h2 { text-align: center; background: #eee; padding: 10px; }
-        .form-group { margin-bottom: 10px; }
-        label { display: inline-block; width: 150px; }
-        input, select, textarea { padding: 5px; width: 250px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid black; padding: 8px; text-align: left; }
-        .btn-group { margin-top: 20px; text-align: center; }
-        button { padding: 10px 20px; cursor: pointer; }
-        
-        /* Gaya untuk cetakan */
-        @media print {
-            .no-print { display: none; }
-            .container { border: none; width: 100%; }
-            body { margin: 0; }
-        }
-    </style>
-</head>
-<body>
-    <div class="container" id="borang">
-        <h2>STANDARD 4: PdPc (SKPMg2)</h2>
-        
-        <div class="form-group">
-            <label>Nama Guru:</label> <input type="text" id="nama">
-        </div>
-        <div class="form-group">
-            <label>Mata Pelajaran:</label> <input type="text" id="subjek">
-        </div>
-        <div class="form-group">
-            <label>Tarikh:</label> <input type="date" id="tarikh">
-        </div>
+<form id="borangPencerapan">
+  <input type="text" name="nama" placeholder="Nama Guru" required>
+  <input type="text" name="mata_pelajaran" placeholder="Mata Pelajaran">
+  
+  <label>4.1.1 (a) Menyediakan RPH:</label>
+  <select name="s411a">
+    <option value="4">4</option>
+    <option value="3">3</option>
+    <option value="2">2</option>
+    <option value="1">1</option>
+  </select>
 
-        <table>
-            <tr><th>Aspek</th><th>Kriteria</th><th>Skor (1-4)</th></tr>
-            <tr><td>4.1.1</td><td>Guru Sebagai Perancang</td><td><input type="number" id="s411" min="1" max="4"></td></tr>
-            <tr><td>4.2.1</td><td>Guru Sebagai Pengawal (Proses)</td><td><input type="number" id="s421" min="1" max="4"></td></tr>
-            <tr><td>4.2.2</td><td>Guru Sebagai Pengawal (Suasana)</td><td><input type="number" id="s422" min="1" max="4"></td></tr>
-            <tr><td>4.3.1</td><td>Guru Sebagai Pembimbing</td><td><input type="number" id="s431" min="1" max="4"></td></tr>
-            <tr><td>4.4.1</td><td>Guru Sebagai Pendorong (Minda)</td><td><input type="number" id="s441" min="1" max="4"></td></tr>
-            <tr><td>4.4.2</td><td>Guru Sebagai Pendorong (Emosi)</td><td><input type="number" id="s442" min="1" max="4"></td></tr>
-            <tr><td>4.5.1</td><td>Guru Sebagai Penilai</td><td><input type="number" id="s451" min="1" max="4"></td></tr>
-            <tr><td>4.6.1</td><td>Murid Sebagai Pembelajar Aktif</td><td><input type="number" id="s461" min="1" max="4"></td></tr>
-        </table>
+  <button type="submit">Hantar Data</button>
+</form>
 
-        <div class="form-group" style="margin-top:20px;">
-            <label>Ulasan:</label><br>
-            <textarea id="ulasan" style="width:100%; height:80px;"></textarea>
-        </div>
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxMwf_xLE-9NFHipNtOPWYhQ6U7-UutUvE72hZslAbvuzhft839cTkoGIzBuzEGZV8WFg/exec';
+  const form = document.getElementById('borangPencerapan');
 
-        <div class="btn-group no-print">
-            <button onclick="hantarData()" style="background: green; color: white;">Hantar ke Sheets</button>
-            <button onclick="window.print()" style="background: blue; color: white;">Cetak Borang</button>
-        </div>
-    </div>
-
-    <script>
-        const WEB_APP_URL = "TAMPAL_URL_APPS_SCRIPT_DI_SINI";
-
-        function hantarData() {
-            const data = {
-                nama: document.getElementById('nama').value,
-                subjek: document.getElementById('subjek').value,
-                tarikh: document.getElementById('tarikh').value,
-                s411: document.getElementById('s411').value,
-                s421: document.getElementById('s421').value,
-                s422: document.getElementById('s422').value,
-                s431: document.getElementById('s431').value,
-                s441: document.getElementById('s441').value,
-                s442: document.getElementById('s442').value,
-                s451: document.getElementById('s451').value,
-                s461: document.getElementById('s461').value,
-                ulasan: document.getElementById('ulasan').value
-            };
-
-            fetch(WEB_APP_URL, {
-                method: "POST",
-                body: JSON.stringify(data)
-            }).then(res => alert("Data Berjaya Dihantar!"));
-        }
-    </script>
-</body>
-</html>
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => alert("Data Berjaya Disimpan!"))
+      .catch(error => console.error('Ralat!', error.message));
+  });
+</script>
