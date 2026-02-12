@@ -9,6 +9,7 @@
         body { background-color: #f4f6f9; font-family: sans-serif; padding: 20px; }
         .container { max-width: 900px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin: auto; }
         .header { text-align: center; margin-bottom: 30px; color: #2c3e50; }
+        .logo-img { max-width: 120px; margin-bottom: 15px; } /* Style untuk logo */
         .aspek-title { background: #007bff; color: white; padding: 10px 15px; border-radius: 5px; margin-top: 25px; margin-bottom: 15px; font-weight: bold; }
         .item-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 10px 0; }
         .item-desc { flex: 1; padding-right: 15px; font-size: 0.95rem; }
@@ -19,20 +20,30 @@
 
 <div class="container">
     <div class="header">
+        <img src="logo.png" alt="Logo Sekolah" class="logo-img">
+        
         <h3>BORANG PENCERAPAN STANDARD 4</h3>
-        <p>Sila isi semua skor dari 4.1.1 hingga 4.6.1</p>
+        <p>SMKA TOK BACHOK</p>
     </div>
 
     <form id="skpmgForm">
         <div class="row mb-4">
             <div class="col-md-12 mb-2"><label>Nama Guru</label><input type="text" name="nama" class="form-control" required></div>
-            <div class="col-md-5 mb-2"><label>Mata Pelajaran</label><input type="text" name="mp" class="form-control" required></div>
+            <div class="col-md-6 mb-2"><label>Mata Pelajaran</label><input type="text" name="mp" class="form-control" required></div>
             <div class="col-md-3 mb-2"><label>Kelas</label><input type="text" name="kelas" class="form-control" required></div>
-            <div class="col-md-4 mb-2"><label>Sesi</label>
+            
+            <div class="col-md-3 mb-2">
+                <label>Jenis Pencerapan</label>
                 <select name="sesi" class="form-select">
-                    <option value="Pagi">Pagi</option>
-                    <option value="Petang">Petang</option>
+                    <option value="KENDIRI">KENDIRI</option>
+                    <option value="PERTAMA">PERTAMA</option>
+                    <option value="KEDUA">KEDUA</option>
                 </select>
+            </div>
+
+            <div class="col-md-12 mb-2">
+                <label>Tarikh Pencerapan</label>
+                <input type="date" name="tarikh" class="form-control" required>
             </div>
         </div>
 
@@ -90,13 +101,14 @@
         <div class="item-row"><span class="item-desc">f) Mengaitkan isi dengan kehidupan</span><select name="s461f" class="form-select item-select"><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
         <div class="item-row"><span class="item-desc">g) Membuat keputusan/selesai masalah</span><select name="s461g" class="form-select item-select"><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
 
-        <button type="submit" class="btn btn-primary w-100 mt-4 p-3" id="submitBtn">HANTAR SKOR</button>
+        <button type="submit" class="btn btn-primary w-100 mt-4 p-3 fw-bold" id="submitBtn">HANTAR SKOR</button>
     </form>
 </div>
 
 <script>
-    // MASUKKAN URL WEB APP (DEPLOYMENT) ANDA DI SINI
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyhhUALf7T-duIOiYAS7WOM-69j1pP-L8XCP6zJ3x8zPy2O7bolfyV417Tsa7TfcI7GRA/exec';
+    // ⚠️ PENTING: Gantikan URL di bawah dengan URL yang anda dapat selepas Deploy Apps Script
+    const scriptURL = 'https://script.google.com/macros/s/AKfycby7bSFgk0dGcVKUSntPJE9vpEUpOhLuBPiAmKI9oOJgDJJpdmnQyqxwVv7sAdnvmKZ8UQ/exec';
+    
     const form = document.getElementById('skpmgForm');
     const btn = document.getElementById('submitBtn');
 
@@ -104,9 +116,19 @@
         e.preventDefault();
         btn.disabled = true;
         btn.innerText = "Sedang Menghantar...";
+        
         fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-            .then(response => { alert("Berjaya disimpan!"); form.reset(); btn.disabled = false; btn.innerText = "HANTAR SKOR"; })
-            .catch(error => { alert("Ralat!"); btn.disabled = false; });
+            .then(response => {
+                alert("Tahniah! Data telah berjaya disimpan.");
+                form.reset();
+                btn.disabled = false;
+                btn.innerText = "HANTAR SKOR";
+            })
+            .catch(error => {
+                alert("Ralat! Sila cuba lagi.");
+                btn.disabled = false;
+                btn.innerText = "HANTAR SKOR";
+            });
     });
 </script>
 
