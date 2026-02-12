@@ -3,17 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Instrumen Standard 4 SKPMg2</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+
     <style>
         body { background-color: #f4f6f9; font-family: sans-serif; padding: 20px; }
         .container { max-width: 900px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin: auto; }
         .header { text-align: center; margin-bottom: 30px; color: #2c3e50; }
-        .logo-img { max-width: 120px; margin-bottom: 15px; } /* Style untuk logo */
+        .logo-img { max-width: 120px; margin-bottom: 15px; }
         .aspek-title { background: #007bff; color: white; padding: 10px 15px; border-radius: 5px; margin-top: 25px; margin-bottom: 15px; font-weight: bold; }
         .item-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 10px 0; }
         .item-desc { flex: 1; padding-right: 15px; font-size: 0.95rem; }
         .item-select { width: 80px; }
+        
+        /* Fix untuk Select2 supaya sama tinggi dengan input lain */
+        .select2-container--bootstrap-5 .select2-selection { border-color: #dee2e6; }
     </style>
 </head>
 <body>
@@ -21,14 +28,158 @@
 <div class="container">
     <div class="header">
         <img src="logo.png" alt="Logo Sekolah" class="logo-img">
-        
         <h3>BORANG PENCERAPAN STANDARD 4</h3>
         <p>SMKA TOK BACHOK</p>
     </div>
 
     <form id="skpmgForm">
         <div class="row mb-4">
-            <div class="col-md-12 mb-2"><label>Nama Guru</label><input type="text" name="nama" class="form-control" required></div>
+            <div class="col-md-12 mb-3">
+                <label>Nama Guru</label>
+                <select name="nama" id="senaraiGuru" class="form-select" required>
+                    <option value="">-- Taip untuk cari nama guru --</option>
+                    <option value="AB AZIZ BIN IBRAHIM">AB AZIZ BIN IBRAHIM</option>
+                    <option value="AB MUHAIMIN BIN AB HAMID">AB MUHAIMIN BIN AB HAMID</option>
+                    <option value="ABDUL AZID BIN ABDUL RAHMAN">ABDUL AZID BIN ABDUL RAHMAN</option>
+                    <option value="AHMAD MUBARAK FIKRI BIN CHE MUSTAFFA">AHMAD MUBARAK FIKRI BIN CHE MUSTAFFA</option>
+                    <option value="AHMAD SYAIBANI ZAINI BIN MOHAMED ZAIN">AHMAD SYAIBANI ZAINI BIN MOHAMED ZAIN</option>
+                    <option value="AHMAD ZULFARID AZIZI BIN ZULKIFLI">AHMAD ZULFARID AZIZI BIN ZULKIFLI</option>
+                    <option value="AINON BINTI MAT AYOB">AINON BINTI MAT AYOB</option>
+                    <option value="AMAANYNA NAADHIRAH BINTI ISMAIL">AMAANYNA NAADHIRAH BINTI ISMAIL</option>
+                    <option value="AMINAH BINTI BAKAR">AMINAH BINTI BAKAR</option>
+                    <option value="ANIS ADLINA BINTI MOHAMAD RAZI">ANIS ADLINA BINTI MOHAMAD RAZI</option>
+                    <option value="ASHMA' BINTI AB RAHIM">ASHMA' BINTI AB RAHIM</option>
+                    <option value="ASMA' BINTI MAT HUSIN">ASMA' BINTI MAT HUSIN</option>
+                    <option value="ASMIDA BINTI YAACOB">ASMIDA BINTI YAACOB</option>
+                    <option value="AZAMANI BIN MOHAMAD ZIN">AZAMANI BIN MOHAMAD ZIN</option>
+                    <option value="AZMAN BIN AZIZ">AZMAN BIN AZIZ</option>
+                    <option value="ANDASIMA BINTI SIDEK">ANDASIMA BINTI SIDEK</option>
+                    <option value="FAIZAH BINTI MUSTAPHA">FAIZAH BINTI MUSTAPHA</option>
+                    <option value="FATHANAH JAMILAH BINTI HISHAM ZUHUDY">FATHANAH JAMILAH BINTI HISHAM ZUHUDY</option>
+                    <option value="HAFSAH BINTI HASSAN">HAFSAH BINTI HASSAN</option>
+                    <option value="HAMIZA HANI BINTI OMAR">HAMIZA HANI BINTI OMAR</option>
+                    <option value="HANIDA BINTI IBRAHIM @ DOLLAH">HANIDA BINTI IBRAHIM @ DOLLAH</option>
+                    <option value="HASLINA BINTI MUHAMAD">HASLINA BINTI MUHAMAD</option>
+                    <option value="HASLIZA BT JAYA">HASLIZA BT JAYA</option>
+                    <option value="HASNIAH BINTI HASHIM">HASNIAH BINTI HASHIM</option>
+                    <option value="HISHAMBUDIN BIN ZAHARI">HISHAMBUDIN BIN ZAHARI</option>
+                    <option value="HUFAIDAH BINTI ABDUL RAHIM">HUFAIDAH BINTI ABDUL RAHIM</option>
+                    <option value="HUSAINI BIN MUHAMAD">HUSAINI BIN MUHAMAD</option>
+                    <option value="IBRAHIM BIN TALIB">IBRAHIM BIN TALIB</option>
+                    <option value="JAINUN BT. UJUD @HANAPIAH">JAINUN BT. UJUD @HANAPIAH</option>
+                    <option value="KAMALAWATI BINTI WAHAB">KAMALAWATI BINTI WAHAB</option>
+                    <option value="KHAIRUL AMILIN BIN ABD KADIR">KHAIRUL AMILIN BIN ABD KADIR</option>
+                    <option value="LATIFAH BINTI RAMELI">LATIFAH BINTI RAMELI</option>
+                    <option value="MOHAMAD IQBAL BIN AHMAD">MOHAMAD IQBAL BIN AHMAD</option>
+                    <option value="MOHAMAD ISMAIL BIN MD NAZIR">MOHAMAD ISMAIL BIN MD NAZIR</option>
+                    <option value="MOHAMAD IZ'AANUDDIN BIN YAACCOB">MOHAMAD IZ'AANUDDIN BIN YAACCOB</option>
+                    <option value="MOHAMMAD MARZUQI BIN ABDUL AZIZ">MOHAMMAD MARZUQI BIN ABDUL AZIZ</option>
+                    <option value="MOHD AIDIL FARISI BIN ABD HALIM">MOHD AIDIL FARISI BIN ABD HALIM</option>
+                    <option value="MOHD ASRI BIN YUSOFF">MOHD ASRI BIN YUSOFF</option>
+                    <option value="MOHD AYUB@MOHD ZAMRI BIN MUSTAFFA">MOHD AYUB@MOHD ZAMRI BIN MUSTAFFA</option>
+                    <option value="MOHD AZIZI BIN CHE YAACOB">MOHD AZIZI BIN CHE YAACOB</option>
+                    <option value="MOHD FAHMI BIN ISMAIL">MOHD FAHMI BIN ISMAIL</option>
+                    <option value="MOHD FARIS BIN MOHAMAD HANAPI">MOHD FARIS BIN MOHAMAD HANAPI</option>
+                    <option value="MOHD IZUDDIN BIN CHE ISMAIL">MOHD IZUDDIN BIN CHE ISMAIL</option>
+                    <option value="MOHD KHAIRUL IZUAN BIN MOHD RADZI">MOHD KHAIRUL IZUAN BIN MOHD RADZI</option>
+                    <option value="MOHD NADZMI BIN CHE MAT">MOHD NADZMI BIN CHE MAT</option>
+                    <option value="MOHD NASIR BIN AWANG NOH">MOHD NASIR BIN AWANG NOH</option>
+                    <option value="MOHD ROSDI BIN HUSAIN">MOHD ROSDI BIN HUSAIN</option>
+                    <option value="MOHD RUZAIMY BIN CHE WAN">MOHD RUZAIMY BIN CHE WAN</option>
+                    <option value="MOHD SEDIK BIN IBRAHIM">MOHD SEDIK BIN IBRAHIM</option>
+                    <option value="MOHD TARIQ BIN ISMAIL">MOHD TARIQ BIN ISMAIL</option>
+                    <option value="MOHD ZOHURI BIN MAR@NAWI">MOHD ZOHURI BIN MAR@NAWI</option>
+                    <option value="MOHD ZULKIFLI BIN WAN IBRAHIM">MOHD ZULKIFLI BIN WAN IBRAHIM</option>
+                    <option value="MUHAMAD HAMIDI BIN ISMAIL">MUHAMAD HAMIDI BIN ISMAIL</option>
+                    <option value="MUHAMMAD BIN MUJAHID">MUHAMMAD BIN MUJAHID</option>
+                    <option value="MUHAMMAD AIMAN BIN HAJI MUSA">MUHAMMAD AIMAN BIN HAJI MUSA</option>
+                    <option value="MUHAMMAD AQUAM BIN ABDUL MAJID">MUHAMMAD AQUAM BIN ABDUL MAJID</option>
+                    <option value="MUHAMMAD HAFIZ BIN AB KADIR">MUHAMMAD HAFIZ BIN AB KADIR</option>
+                    <option value="MUHD FADHLI BIN JUSOH">MUHD FADHLI BIN JUSOH</option>
+                    <option value="MUNIRAH BINTI EMBONG">MUNIRAH BINTI EMBONG</option>
+                    <option value="MUNIRAH BINTI MOHD NOOR">MUNIRAH BINTI MOHD NOOR</option>
+                    <option value="MUNZIR BIN GHAZALI">MUNZIR BIN GHAZALI</option>
+                    <option value="MURSYIDAH BINTI MAMAT @ YUSOF">MURSYIDAH BINTI MAMAT @ YUSOF</option>
+                    <option value="NAIMAH BINTI MOHAMAD NAIM">NAIMAH BINTI MOHAMAD NAIM</option>
+                    <option value="NAJMUDDIN BIN OMAR">NAJMUDDIN BIN OMAR</option>
+                    <option value="NASIBAH BINTI AHMAD NAJIB">NASIBAH BINTI AHMAD NAJIB</option>
+                    <option value="NIK ABDUL HAKEEM BIN NIK AZHAR">NIK ABDUL HAKEEM BIN NIK AZHAR</option>
+                    <option value="NIK MUHAMMAD BIN NIK MANSOR">NIK MUHAMMAD BIN NIK MANSOR</option>
+                    <option value="NIK SHAHRUL NIZAN BIN MOHAMED">NIK SHAHRUL NIZAN BIN MOHAMED</option>
+                    <option value="NIK SHAMRI BIN MOHAMED">NIK SHAMRI BIN MOHAMED</option>
+                    <option value="NIK SUHANNI BT NIK MOHD @ NIK MOHD NOOR">NIK SUHANNI BT NIK MOHD @ NIK MOHD NOOR</option>
+                    <option value="NOOR FADHILAH BINTI NAWAWI">NOOR FADHILAH BINTI NAWAWI</option>
+                    <option value="NOOR FADHLINA BT. NAWAWI">NOOR FADHLINA BT. NAWAWI</option>
+                    <option value="NOOR HASNANI BINTI MOHD HASSAN">NOOR HASNANI BINTI MOHD HASSAN</option>
+                    <option value="NOOR LAILA BT. MUHIDDIN @ YIDIN">NOOR LAILA BT. MUHIDDIN @ YIDIN</option>
+                    <option value="NOR AINI BINTI CHE SOH">NOR AINI BINTI CHE SOH</option>
+                    <option value="NOR AMALINA BT CHE YUSOF">NOR AMALINA BT CHE YUSOF</option>
+                    <option value="NOR ASIAH BT. MOHAMAD">NOR ASIAH BT. MOHAMAD</option>
+                    <option value="NOR ASYIKIN BINTI MOHAMAD NOR">NOR ASYIKIN BINTI MOHAMAD NOR</option>
+                    <option value="NOR AZAM BIN JAAFAR">NOR AZAM BIN JAAFAR</option>
+                    <option value="NOR BADRIAH BINTI AB MANAFF">NOR BADRIAH BINTI AB MANAFF</option>
+                    <option value="NOR SALWANI BINTI RAMLI">NOR SALWANI BINTI RAMLI</option>
+                    <option value="NORAZMALIZA BINTI DAUD">NORAZMALIZA BINTI DAUD</option>
+                    <option value="NORIHAL BT MUHAMAD">NORIHAL BT MUHAMAD</option>
+                    <option value="NORLIN BIN MOHAMED">NORLIN BIN MOHAMED</option>
+                    <option value="NORMAISARAH BINTI WAHAB">NORMAISARAH BINTI WAHAB</option>
+                    <option value="NORMAISITAH BINTI MALEK">NORMAISITAH BINTI MALEK</option>
+                    <option value="NORZAINI BINTI MOHD NOOR">NORZAINI BINTI MOHD NOOR</option>
+                    <option value="NUR AMILY BINTI ZULKIFLI @ A.P. JOHN">NUR AMILY BINTI ZULKIFLI @ A.P. JOHN</option>
+                    <option value="NUR HAZWANEE BT AHNAL">NUR HAZWANEE BT AHNAL</option>
+                    <option value="NUR HAZWANI BINTI SHALAH HUDDIN">NUR HAZWANI BINTI SHALAH HUDDIN</option>
+                    <option value="NUR IZATI BINTI MOHD HASIM">NUR IZATI BINTI MOHD HASIM</option>
+                    <option value="NUR'AIN NATASHA BINTI MAMAT">NUR'AIN NATASHA BINTI MAMAT</option>
+                    <option value="NURUL AIN ASMAH BINTI WAHIT">NURUL AIN ASMAH BINTI WAHIT</option>
+                    <option value="NURUL AKMAL BINTI MUHMAD SAUPI">NURUL AKMAL BINTI MUHMAD SAUPI</option>
+                    <option value="NURUL HIDAYAH BINTI ABDULLAH">NURUL HIDAYAH BINTI ABDULLAH</option>
+                    <option value="NURUL HIDAYAH BINTI MAT YUSOF">NURUL HIDAYAH BINTI MAT YUSOF</option>
+                    <option value="NURUL HIDAYAT BINTI MOHD SABRI">NURUL HIDAYAT BINTI MOHD SABRI</option>
+                    <option value="R.NOR AIMUNI BINTI R.AB.RASHID">R.NOR AIMUNI BINTI R.AB.RASHID</option>
+                    <option value="RABI'ATUL ADAWIYAH BINTI YAHYA">RABI'ATUL ADAWIYAH BINTI YAHYA</option>
+                    <option value="RAFAIZAH BINTI SIDEK">RAFAIZAH BINTI SIDEK</option>
+                    <option value="RAHMAT NAZRI BIN JALI">RAHMAT NAZRI BIN JALI</option>
+                    <option value="ROHAYA BINTI YAACOB">ROHAYA BINTI YAACOB</option>
+                    <option value="ROSEMIZA AZMIRA BINTI MOHD ALI">ROSEMIZA AZMIRA BINTI MOHD ALI</option>
+                    <option value="ROSLINA BINTI MD SALLEH">ROSLINA BINTI MD SALLEH</option>
+                    <option value="ROSYATI BT MOHAMED">ROSYATI BT MOHAMED</option>
+                    <option value="RUS AZMERAA BINTI ROSMADI">RUS AZMERAA BINTI ROSMADI</option>
+                    <option value="SHAKIRAH ATIAH BINTI CHE HUSSIN">SHAKIRAH ATIAH BINTI CHE HUSSIN</option>
+                    <option value="SHAMSUZUHA BIN NASIR">SHAMSUZUHA BIN NASIR</option>
+                    <option value="SITI AEISYAH BINTI MOHAMMAD SAAD">SITI AEISYAH BINTI MOHAMMAD SAAD</option>
+                    <option value="SITI ASMA ZULYANI BINTI ZULKIFLI">SITI ASMA ZULYANI BINTI ZULKIFLI</option>
+                    <option value="SITI BALQIS BINTI MOHD NAIM">SITI BALQIS BINTI MOHD NAIM</option>
+                    <option value="SITI HAJAR BT. BARLAN">SITI HAJAR BT. BARLAN</option>
+                    <option value="SITI HANNAH BINTI CHE HUSIN">SITI HANNAH BINTI CHE HUSIN</option>
+                    <option value="SITI KHADIJAH MOHAMAD NOOR">SITI KHADIJAH MOHAMAD NOOR</option>
+                    <option value="SITI KHAIRANI BINTI HASSIM">SITI KHAIRANI BINTI HASSIM</option>
+                    <option value="SITI NADIATULLAZMA BINTI AHMAD">SITI NADIATULLAZMA BINTI AHMAD</option>
+                    <option value="SITI NATASYA BINTI OMAR">SITI NATASYA BINTI OMAR</option>
+                    <option value="SITI NORHAJAR BINTI HUSSAIN">SITI NORHAJAR BINTI HUSSAIN</option>
+                    <option value="SITI ZAHARAH BT MOHAMED">SITI ZAHARAH BT MOHAMED</option>
+                    <option value="SITI ZALIHAH BINTI MAHASAN">SITI ZALIHAH BINTI MAHASAN</option>
+                    <option value="SOLLEH BIN IBRAHIM">SOLLEH BIN IBRAHIM</option>
+                    <option value="SUHAIDA BT SHUIB">SUHAIDA BT SHUIB</option>
+                    <option value="SUZITA BINTI HASSAN">SUZITA BINTI HASSAN</option>
+                    <option value="SYED MOHD IKRAMUDIN BIN SYED OMAR">SYED MOHD IKRAMUDIN BIN SYED OMAR</option>
+                    <option value="TENGKU MOHD NORHANIF BIN R. AB RASHID">TENGKU MOHD NORHANIF BIN R. AB RASHID</option>
+                    <option value="TENGKU MURHAINI BINTI TENGKU HASSAN">TENGKU MURHAINI BINTI TENGKU HASSAN</option>
+                    <option value="THUAIBAH BINTI ABDUL RAHMAN">THUAIBAH BINTI ABDUL RAHMAN</option>
+                    <option value="TOHIRAH BT MAT YUSOFF">TOHIRAH BT MAT YUSOFF</option>
+                    <option value="UMMU SOFIAH BINTI MOHAMMD ROSTAM">UMMU SOFIAH BINTI MOHAMMD ROSTAM</option>
+                    <option value="W NUR AESAH BINTI W JAAFAR">W NUR AESAH BINTI W JAAFAR</option>
+                    <option value="WAN AHMAD FAROUQ BIN WAN MOHD AZMI">WAN AHMAD FAROUQ BIN WAN MOHD AZMI</option>
+                    <option value="WAN HAYYI BIN WAN MAHMUD">WAN HAYYI BIN WAN MAHMUD</option>
+                    <option value="WAN MOHD HISYAM BIN WAN AWANG">WAN MOHD HISYAM BIN WAN AWANG</option>
+                    <option value="WAN NOR HISYAM B WAN SULAIMAN">WAN NOR HISYAM B WAN SULAIMAN</option>
+                    <option value="YUSHRAF BIN YUSOF">YUSHRAF BIN YUSOF</option>
+                    <option value="ZAKRI SHAM BIN ZAKARIA">ZAKRI SHAM BIN ZAKARIA</option>
+                    <option value="ZAMZURI BIN MUHAMMAD">ZAMZURI BIN MUHAMMAD</option>
+                    <option value="ZAWIYAH BINTI SALLEH">ZAWIYAH BINTI SALLEH</option>
+                    <option value="ZURAINAH BT MOHD GHAZALI">ZURAINAH BT MOHD GHAZALI</option>
+                </select>
+            </div>
+
             <div class="col-md-6 mb-2"><label>Mata Pelajaran</label><input type="text" name="mp" class="form-control" required></div>
             <div class="col-md-3 mb-2"><label>Kelas</label><input type="text" name="kelas" class="form-control" required></div>
             
@@ -105,22 +256,47 @@
     </form>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
-    // ⚠️ PENTING: Gantikan URL di bawah dengan URL yang anda dapat selepas Deploy Apps Script
-    const scriptURL = 'https://script.google.com/macros/s/AKfycby7bSFgk0dGcVKUSntPJE9vpEUpOhLuBPiAmKI9oOJgDJJpdmnQyqxwVv7sAdnvmKZ8UQ/exec';
+    // 1. Aktifkan Fungsi Carian pada Dropdown Nama
+    $(document).ready(function() {
+        $('#senaraiGuru').select2({
+            theme: 'bootstrap-5', // Gunakan tema Bootstrap supaya cantik
+            placeholder: "-- Taip untuk cari nama guru --",
+            allowClear: true
+        });
+    });
+
+    // 2. Skrip Hantar Data
+    // ⚠️ GANTIKAN URL DI BAWAH DENGAN URL APPS SCRIPT AWAK!
+    const scriptURL = 'https://script.google.com/macros/s/AKfycby7bSFgk0dGcVKUSntPJE9vpEUpOhLuBPiAmKI9oOJgDJJpdmnQyqxwVv7sAdnvmKZ8UQ/exec'; 
     
     const form = document.getElementById('skpmgForm');
     const btn = document.getElementById('submitBtn');
 
     form.addEventListener('submit', e => {
         e.preventDefault();
+        
+        // Semak jika nama guru dipilih
+        if ($('#senaraiGuru').val() === "") {
+            alert("Sila pilih Nama Guru!");
+            return;
+        }
+
         btn.disabled = true;
         btn.innerText = "Sedang Menghantar...";
         
         fetch(scriptURL, { method: 'POST', body: new FormData(form)})
             .then(response => {
                 alert("Tahniah! Data telah berjaya disimpan.");
+                
+                // Reset form dan reset juga dropdown Select2
                 form.reset();
+                $('#senaraiGuru').val(null).trigger('change'); 
+                
                 btn.disabled = false;
                 btn.innerText = "HANTAR SKOR";
             })
