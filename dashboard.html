@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Semakan - SMKA Tok Bachok</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f0f2f5; 
+            margin: 0; 
+            padding: 20px; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 40px auto; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+        }
+        h2 { 
+            text-align: center; 
+            color: #1a1a1a; 
+            margin-bottom: 30px;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+        }
+        th, td { 
+            padding: 15px; 
+            text-align: center; 
+            border-bottom: 1px solid #ddd; 
+        }
+        th { 
+            background-color: #2563eb; 
+            color: white; 
+            font-weight: 600;
+        }
+        tr:hover {
+            background-color: #f8fafc;
+        }
+        .tab-name {
+            text-align: left;
+            font-weight: bold;
+            color: #334155;
+        }
+        .status-hantar { color: #16a34a; font-weight: bold; }
+        .status-belum { color: #dc2626; font-weight: bold; }
+        .loading { text-align: center; font-style: italic; color: #666; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>📊 Dashboard Status Penghantaran</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th style="text-align: left;">Kumpulan</th>
+                    <th>Jumlah Staf</th>
+                    <th>Sudah Hantar</th>
+                    <th>Belum Hantar</th>
+                </tr>
+            </thead>
+            <tbody id="dashboard-body">
+                <tr>
+                    <td colspan="4" class="loading">Memuat turun data dari Google Sheets...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // ID fail Google Sheets anda daripada pautan yang diberikan
+        const sheetId = '1gF6ghHSaDKOFXvoKXMejJDX8kPI3xXxcc6XdsCvF-5E';
+        
+        // Senarai tab di dalam helaian anda
+        const tabs = ['PENTADBIR', 'GKB', 'GKPI', 'GKSM', 'GKSS', 'T6'];
+
+        async function fetchSheetData() {
+            const tbody = document.getElementById('dashboard-body');
+            tbody.innerHTML = ''; // Kosongkan mesej loading
+            
+            for (let tab of tabs) {
+                // Menggunakan endpoint gviz untuk mendapatkan data dalam format JSON
+                const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${tab}`;
+                
+                try {
+                    const response = await fetch(url);
+                    const text = await response.text();
+                    
+                    // Endpoint Google akan pulangkan teks dalam bentuk fungsi JavaScript, 
+                    // kita potong teks tersebut untuk ambil objek JSON di dalamnya
+                    const jsonString = text.substring(47, text.length - 2);
+                    const data = JSON.parse(jsonString);
+                    
+                    let totalStaf = 0;
+                    let sudahHantar = 0;
+                    
+                    const rows = data.table.rows;
+                    
+                    // Pengiraan data
+                    rows.forEach((row, index) => {
+                        // Jika baris pertama adalah tajuk, kita langkau
+                        if (index === 0 && row.c[1] && row.c[1].v === 'NAMA') return; 
+                        
+                        // Semak jika lajur NAMA (Lajur B / index 1) mempunyai nilai
+                        if (row.c[1] && row.c[1].v) { 
+                            totalStaf++;
+                            
+                            // Semak lajur KENDIRI (Lajur C / index 2)
+                            // Andaian: Ia menggunakan checkbox (TRUE) atau ada teks
+                            const kendiri = row.c[2];
+                            if (kendiri && (kendiri.v === true || kendiri.v === 'TRUE' || kendiri.v !== null)) {
+                                sudahHantar++;
+                            }
+                        }
+                    });
+                    
+                    let belumHantar = totalStaf - sudahHantar;
+                    
+                    // Bina struktur jadual dan paparkan ke web
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="tab-name">${tab}</td>
+                        <td>${totalStaf}</td>
+                        <td class="status-hantar">${sudahHantar}</td>
+                        <td class="status-belum">${belumHantar}</td>
+                    `;
+                    tbody.appendChild(tr);
+                    
+                } catch (error) {
+                    console.error(`Gagal memuat turun data untuk tab ${tab}:`, error);
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="tab-name">${tab}</td>
+                        <td colspan="3" style="color:red; text-align:center;">Gagal memuat turun data. Pastikan Sheet 'Public'.</td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            }
+        }
+
+        // Jalankan fungsi pengiraan
+        fetchSheetData();
+    </script>
+
+</body>
+</html>
