@@ -7,146 +7,208 @@
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #f0f2f5; 
+            background-color: #f1f5f9; 
             margin: 0; 
             padding: 20px; 
         }
         .container { 
-            max-width: 800px; 
-            margin: 40px auto; 
-            background: white; 
-            padding: 30px; 
-            border-radius: 10px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            max-width: 900px; 
+            margin: 20px auto; 
         }
         h2 { 
             text-align: center; 
-            color: #1a1a1a; 
+            color: #1e293b; 
             margin-bottom: 30px;
+        }
+        
+        /* Gaya untuk Dropdown (Accordion) */
+        details {
+            background: #ffffff;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+        summary {
+            padding: 18px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #2563eb;
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none; /* Buang icon default */
+        }
+        summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] summary {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            background: #1d4ed8;
+        }
+        .summary-count {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        /* Gaya untuk Jadual di dalam Dropdown */
+        .panel-content {
+            padding: 15px;
+            overflow-x: auto; /* Memastikan jadual boleh di-scroll pada skrin kecil */
         }
         table { 
             width: 100%; 
             border-collapse: collapse; 
+            min-width: 500px;
         }
         th, td { 
-            padding: 15px; 
+            padding: 12px; 
             text-align: center; 
-            border-bottom: 1px solid #ddd; 
+            border-bottom: 1px solid #e2e8f0; 
+            font-size: 14px;
         }
         th { 
-            background-color: #2563eb; 
-            color: white; 
+            background-color: #f8fafc; 
+            color: #475569; 
             font-weight: 600;
         }
-        tr:hover {
-            background-color: #f8fafc;
-        }
-        .tab-name {
-            text-align: left;
+        tr:hover { background-color: #f1f5f9; }
+        
+        .col-nama { text-align: left; font-weight: 500; color: #334155; }
+        
+        /* Badge Status */
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: bold;
-            color: #334155;
+            display: inline-block;
         }
-        .status-hantar { color: #16a34a; font-weight: bold; }
-        .status-belum { color: #dc2626; font-weight: bold; }
-        .loading { text-align: center; font-style: italic; color: #666; }
+        .badge-hantar { background-color: #dcfce7; color: #16a34a; }
+        .badge-belum { background-color: #fee2e2; color: #dc2626; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h2>📊 Dashboard Status Penghantaran</h2>
+        <h2>📊 Dashboard Semakan e-RPH</h2>
         
-        <table>
-            <thead>
-                <tr>
-                    <th style="text-align: left;">Kumpulan</th>
-                    <th>Jumlah Staf</th>
-                    <th>Sudah Hantar</th>
-                    <th>Belum Hantar</th>
-                </tr>
-            </thead>
-            <tbody id="dashboard-body">
-                <tr>
-                    <td colspan="4" class="loading">Memuat turun data dari Google Sheets...</td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- Ruang di mana semua dropdown akan dimasukkan secara automatik -->
+        <div id="dashboard-container"></div>
     </div>
 
     <script>
-        // ID fail Google Sheets anda daripada pautan yang diberikan
+        // ID fail Google Sheets anda
         const sheetId = '1gF6ghHSaDKOFXvoKXMejJDX8kPI3xXxcc6XdsCvF-5E';
         
-        // Senarai tab di dalam helaian anda
+        // Senarai tab
         const tabs = ['PENTADBIR', 'GKB', 'GKPI', 'GKSM', 'GKSS', 'T6'];
+        const container = document.getElementById('dashboard-container');
 
-        async function fetchSheetData() {
-            const tbody = document.getElementById('dashboard-body');
-            tbody.innerHTML = ''; // Kosongkan mesej loading
-            
-            for (let tab of tabs) {
-                // Menggunakan endpoint gviz untuk mendapatkan data dalam format JSON
-                const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${tab}`;
-                
-                try {
-                    const response = await fetch(url);
-                    const text = await response.text();
-                    
-                    // Endpoint Google akan pulangkan teks dalam bentuk fungsi JavaScript, 
-                    // kita potong teks tersebut untuk ambil objek JSON di dalamnya
-                    const jsonString = text.substring(47, text.length - 2);
-                    const data = JSON.parse(jsonString);
-                    
-                    let totalStaf = 0;
-                    let sudahHantar = 0;
-                    
-                    const rows = data.table.rows;
-                    
-                    // Pengiraan data
-                    rows.forEach((row, index) => {
-                        // Jika baris pertama adalah tajuk, kita langkau
-                        if (index === 0 && row.c[1] && row.c[1].v === 'NAMA') return; 
-                        
-                        // Semak jika lajur NAMA (Lajur B / index 1) mempunyai nilai
-                        if (row.c[1] && row.c[1].v) { 
-                            totalStaf++;
-                            
-                            // Semak lajur KENDIRI (Lajur C / index 2)
-                            // Andaian: Ia menggunakan checkbox (TRUE) atau ada teks
-                            const kendiri = row.c[2];
-                            if (kendiri && (kendiri.v === true || kendiri.v === 'TRUE' || kendiri.v !== null)) {
-                                sudahHantar++;
-                            }
-                        }
-                    });
-                    
-                    let belumHantar = totalStaf - sudahHantar;
-                    
-                    // Bina struktur jadual dan paparkan ke web
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td class="tab-name">${tab}</td>
-                        <td>${totalStaf}</td>
-                        <td class="status-hantar">${sudahHantar}</td>
-                        <td class="status-belum">${belumHantar}</td>
-                    `;
-                    tbody.appendChild(tr);
-                    
-                } catch (error) {
-                    console.error(`Gagal memuat turun data untuk tab ${tab}:`, error);
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td class="tab-name">${tab}</td>
-                        <td colspan="3" style="color:red; text-align:center;">Gagal memuat turun data. Pastikan Sheet 'Public'.</td>
-                    `;
-                    tbody.appendChild(tr);
-                }
+        // 1. Sediakan struktur kotak (details) untuk setiap tab supaya susunan tidak lari
+        tabs.forEach(tab => {
+            const details = document.createElement('details');
+            details.id = `details-${tab}`;
+            details.innerHTML = `
+                <summary>
+                    <span>${tab}</span> 
+                    <span class="summary-count" id="count-${tab}">Memuat turun...</span>
+                </summary>
+                <div class="panel-content" id="content-${tab}">
+                    <p style="text-align:center; color:#64748b;">Sedang mengambil data dari Google Sheets...</p>
+                </div>
+            `;
+            container.appendChild(details);
+        });
+
+        // 2. Fungsi untuk menentukan rupa status Hantar/Belum
+        function semakStatus(cell) {
+            // Jika sel ada nilai dan bukan perkataan 'FALSE' (jika guna checkbox yang tak ditanda)
+            if (cell && cell.v !== null && cell.v !== false && cell.v.toString().toUpperCase() !== 'FALSE') {
+                return '<span class="badge badge-hantar">✔ Hantar</span>';
             }
+            return '<span class="badge badge-belum">✘ Belum</span>';
         }
 
-        // Jalankan fungsi pengiraan
-        fetchSheetData();
-    </script>
+        // 3. Tarik data (Fetch) untuk setiap tab
+        tabs.forEach(async (tab) => {
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${tab}`;
+            
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                
+                // Ekstrak format JSON
+                const jsonString = text.substring(47, text.length - 2);
+                const data = JSON.parse(jsonString);
+                
+                let totalStaf = 0;
+                let rowsHtml = '';
+                
+                // Mula membaca baris-baris data
+                data.table.rows.forEach((row, index) => {
+                    // Abaikan baris tajuk (header)
+                    if (index === 0 && row.c[1] && row.c[1].v === 'NAMA') return; 
+                    
+                    // Semak jika ada nama di lajur B (index 1)
+                    if (row.c[1] && row.c[1].v) { 
+                        totalStaf++;
+                        const nama = row.c[1].v;
+                        
+                        // Semak status untuk lajur C(Kendiri), D(Pertama), E(Kedua)
+                        const statusKendiri = semakStatus(row.c[2]); 
+                        const statusPertama = semakStatus(row.c[3]);
+                        const statusKedua = semakStatus(row.c[4]);
 
+                        rowsHtml += `
+                            <tr>
+                                <td class="col-nama">${nama}</td>
+                                <td>${statusKendiri}</td>
+                                <td>${statusPertama}</td>
+                                <td>${statusKedua}</td>
+                            </tr>
+                        `;
+                    }
+                });
+                
+                // Kemas kini jumlah staf pada butang dropdown
+                document.getElementById(`count-${tab}`).innerText = `${totalStaf} Senarai Nama`;
+                
+                // Masukkan jadual ke dalam dropdown
+                if(totalStaf > 0) {
+                    document.getElementById(`content-${tab}`).innerHTML = `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="col-nama">NAMA GURU / STAF</th>
+                                    <th>KENDIRI</th>
+                                    <th>PERTAMA</th>
+                                    <th>KEDUA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rowsHtml}
+                            </tbody>
+                        </table>
+                    `;
+                } else {
+                    document.getElementById(`content-${tab}`).innerHTML = `<p style="text-align:center;">Tiada data nama ditemui.</p>`;
+                }
+                
+            } catch (error) {
+                console.error(`Ralat pada tab ${tab}:`, error);
+                document.getElementById(`count-${tab}`).innerText = `Ralat!`;
+                document.getElementById(`content-${tab}`).innerHTML = `
+                    <p style="color:#dc2626; text-align:center;">Gagal memuat turun data. Pastikan pautan Google Sheets ditetapkan kepada 'Public'.</p>
+                `;
+            }
+        });
+    </script>
 </body>
 </html>
