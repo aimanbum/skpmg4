@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Pengisian Skpmg4</title>
+    <title>Dashboard Semakan - SMKA Tok Bachok</title>
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -19,10 +19,43 @@
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-        h2 { 
-            text-align: center; 
-            color: #0f172a; 
+        
+        /* Bahagian Tajuk (Header) */
+        .header-section {
+            text-align: center;
             margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+        .header-section h2 { 
+            color: #0f172a; 
+            margin: 0 0 15px 0;
+        }
+
+        /* Gaya Butang Pautan Google Drive */
+        .drive-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #f8fafc;
+            color: #334155;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border: 1px solid #cbd5e1;
+            transition: all 0.3s ease;
+        }
+        .drive-btn:hover {
+            background-color: #f1f5f9;
+            border-color: #94a3b8;
+            color: #0f172a;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .drive-icon {
+            width: 20px;
+            height: 20px;
         }
         
         /* Gaya Ruangan Menu (Butang) */
@@ -31,9 +64,7 @@
             flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #f1f5f9;
+            margin-bottom: 20px;
         }
         .menu-btn {
             padding: 12px 24px;
@@ -66,12 +97,12 @@
             border: 2px dashed #cbd5e1;
         }
         .tab-content {
-            display: none; /* Sembunyikan semua jadual pada mulanya */
+            display: none; 
             animation: fadeIn 0.4s;
             overflow-x: auto;
         }
         .tab-content.active {
-            display: block; /* Paparkan hanya jadual yang aktif */
+            display: block; 
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -107,7 +138,19 @@
 <body>
 
     <div class="container">
-        <h2>📊 Dashboard Semakan Pengisian Skpmg4</h2>
+        <!-- Bahagian Tajuk Utama -->
+        <div class="header-section">
+            <h2>📊 Dashboard Semakan e-RPH</h2>
+            
+            <!-- Butang Pautan Google Drive -->
+            <a href="https://drive.google.com/drive/folders/1fXTEuiTwKNm6FHMLZ6XgHQFlMyol6aEb?usp=sharing" target="_blank" class="drive-btn">
+                <!-- SVG Icon Folder -->
+                <svg class="drive-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 4H4C2.89543 4 2 4.89543 2 6V18C2 19.1046 2.89543 20 4 20H20C21.1046 20 22 19.1046 22 18V8C22 6.89543 21.1046 6 20 6H12L10 4Z" fill="#FACC15" stroke="#EAB308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Buka Folder RPH
+            </a>
+        </div>
         
         <!-- Butang Menu Akan Dijana Di Sini -->
         <div class="menu-container" id="menu-container"></div>
@@ -129,16 +172,13 @@
         const contentContainer = document.getElementById('content-container');
         const welcomeMsg = document.getElementById('welcome-msg');
 
-        // 1. Bina struktur butang menu dan ruang jadual
         tabs.forEach(tab => {
-            // Cipta Butang
             const btn = document.createElement('button');
             btn.className = 'menu-btn';
             btn.innerText = tab;
             btn.onclick = () => bukaMenu(tab);
             menuContainer.appendChild(btn);
 
-            // Cipta Ruang Jadual (disembunyikan secara default)
             const div = document.createElement('div');
             div.className = 'tab-content';
             div.id = `content-${tab}`;
@@ -146,27 +186,21 @@
             contentContainer.appendChild(div);
         });
 
-        // 2. Fungsi apabila menu ditekan
         function bukaMenu(tabPilihan) {
-            // Sembunyikan mesej "Sila pilih"
             welcomeMsg.style.display = 'none';
 
-            // Buang warna aktif dari semua butang
             document.querySelectorAll('.menu-btn').forEach(btn => {
                 btn.classList.remove('active');
-                if(btn.innerText === tabPilihan) btn.classList.add('active'); // Warnakan butang yang ditekan
+                if(btn.innerText === tabPilihan) btn.classList.add('active');
             });
 
-            // Sembunyikan semua jadual
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
 
-            // Paparkan jadual yang dipilih sahaja
             document.getElementById(`content-${tabPilihan}`).classList.add('active');
         }
 
-        // 3. Fungsi semak Hantar/Belum
         function semakStatus(cell) {
             if (cell && cell.v !== null && cell.v !== false && cell.v.toString().toUpperCase() !== 'FALSE') {
                 return '<span class="badge badge-hantar">✔ Hantar</span>';
@@ -174,7 +208,6 @@
             return '<span class="badge badge-belum">✘ Belum</span>';
         }
 
-        // 4. Tarik data secara latar belakang
         tabs.forEach(async (tab) => {
             const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${tab}`;
             try {
