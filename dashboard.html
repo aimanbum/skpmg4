@@ -7,84 +7,87 @@
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #f1f5f9; 
+            background-color: #f8fafc; 
             margin: 0; 
             padding: 20px; 
         }
         .container { 
             max-width: 900px; 
             margin: 20px auto; 
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
         h2 { 
             text-align: center; 
-            color: #1e293b; 
+            color: #0f172a; 
             margin-bottom: 30px;
         }
         
-        /* Gaya untuk Dropdown (Accordion) */
-        details {
-            background: #ffffff;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-        }
-        summary {
-            padding: 18px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            background: #2563eb;
-            color: white;
-            border-radius: 8px;
+        /* Gaya Ruangan Menu (Butang) */
+        .menu-container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            list-style: none; /* Buang icon default */
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f1f5f9;
         }
-        summary::-webkit-details-marker {
-            display: none;
+        .menu-btn {
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #475569;
+            background-color: #e2e8f0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        details[open] summary {
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            background: #1d4ed8;
+        .menu-btn:hover {
+            background-color: #cbd5e1;
         }
-        .summary-count {
-            background: rgba(255,255,255,0.2);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 14px;
+        .menu-btn.active {
+            background-color: #2563eb;
+            color: white;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
         }
 
-        /* Gaya untuk Jadual di dalam Dropdown */
-        .panel-content {
-            padding: 15px;
-            overflow-x: auto; /* Memastikan jadual boleh di-scroll pada skrin kecil */
+        /* Gaya Kandungan Jadual */
+        #welcome-msg {
+            text-align: center;
+            color: #64748b;
+            font-size: 18px;
+            padding: 40px 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 2px dashed #cbd5e1;
         }
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            min-width: 500px;
+        .tab-content {
+            display: none; /* Sembunyikan semua jadual pada mulanya */
+            animation: fadeIn 0.4s;
+            overflow-x: auto;
         }
-        th, td { 
-            padding: 12px; 
-            text-align: center; 
-            border-bottom: 1px solid #e2e8f0; 
-            font-size: 14px;
+        .tab-content.active {
+            display: block; /* Paparkan hanya jadual yang aktif */
         }
-        th { 
-            background-color: #f8fafc; 
-            color: #475569; 
-            font-weight: 600;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        tr:hover { background-color: #f1f5f9; }
-        
-        .col-nama { text-align: left; font-weight: 500; color: #334155; }
+
+        /* Jadual */
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th, td { padding: 14px; text-align: center; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        th { background-color: #f1f5f9; color: #334155; font-weight: 600; }
+        tr:hover { background-color: #f8fafc; }
+        .col-nama { text-align: left; font-weight: 500; color: #1e293b; }
         
         /* Badge Status */
         .badge {
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: bold;
@@ -92,6 +95,13 @@
         }
         .badge-hantar { background-color: #dcfce7; color: #16a34a; }
         .badge-belum { background-color: #fee2e2; color: #dc2626; }
+        
+        .jumlah-staf {
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #2563eb;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -99,69 +109,89 @@
     <div class="container">
         <h2>📊 Dashboard Semakan e-RPH</h2>
         
-        <!-- Ruang di mana semua dropdown akan dimasukkan secara automatik -->
-        <div id="dashboard-container"></div>
+        <!-- Butang Menu Akan Dijana Di Sini -->
+        <div class="menu-container" id="menu-container"></div>
+        
+        <!-- Mesej Selamat Datang -->
+        <div id="welcome-msg">
+            👆 Sila pilih kumpulan dari menu di atas untuk memaparkan senarai nama dan status.
+        </div>
+        
+        <!-- Jadual Akan Dijana Di Sini -->
+        <div id="content-container"></div>
     </div>
 
     <script>
-        // ID fail Google Sheets anda
         const sheetId = '1gF6ghHSaDKOFXvoKXMejJDX8kPI3xXxcc6XdsCvF-5E';
-        
-        // Senarai tab
         const tabs = ['PENTADBIR', 'GKB', 'GKPI', 'GKSM', 'GKSS', 'T6'];
-        const container = document.getElementById('dashboard-container');
+        
+        const menuContainer = document.getElementById('menu-container');
+        const contentContainer = document.getElementById('content-container');
+        const welcomeMsg = document.getElementById('welcome-msg');
 
-        // 1. Sediakan struktur kotak (details) untuk setiap tab supaya susunan tidak lari
+        // 1. Bina struktur butang menu dan ruang jadual
         tabs.forEach(tab => {
-            const details = document.createElement('details');
-            details.id = `details-${tab}`;
-            details.innerHTML = `
-                <summary>
-                    <span>${tab}</span> 
-                    <span class="summary-count" id="count-${tab}">Memuat turun...</span>
-                </summary>
-                <div class="panel-content" id="content-${tab}">
-                    <p style="text-align:center; color:#64748b;">Sedang mengambil data dari Google Sheets...</p>
-                </div>
-            `;
-            container.appendChild(details);
+            // Cipta Butang
+            const btn = document.createElement('button');
+            btn.className = 'menu-btn';
+            btn.innerText = tab;
+            btn.onclick = () => bukaMenu(tab);
+            menuContainer.appendChild(btn);
+
+            // Cipta Ruang Jadual (disembunyikan secara default)
+            const div = document.createElement('div');
+            div.className = 'tab-content';
+            div.id = `content-${tab}`;
+            div.innerHTML = `<p style="text-align:center; color:#64748b;">Memuat turun data ${tab}...</p>`;
+            contentContainer.appendChild(div);
         });
 
-        // 2. Fungsi untuk menentukan rupa status Hantar/Belum
+        // 2. Fungsi apabila menu ditekan
+        function bukaMenu(tabPilihan) {
+            // Sembunyikan mesej "Sila pilih"
+            welcomeMsg.style.display = 'none';
+
+            // Buang warna aktif dari semua butang
+            document.querySelectorAll('.menu-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText === tabPilihan) btn.classList.add('active'); // Warnakan butang yang ditekan
+            });
+
+            // Sembunyikan semua jadual
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Paparkan jadual yang dipilih sahaja
+            document.getElementById(`content-${tabPilihan}`).classList.add('active');
+        }
+
+        // 3. Fungsi semak Hantar/Belum
         function semakStatus(cell) {
-            // Jika sel ada nilai dan bukan perkataan 'FALSE' (jika guna checkbox yang tak ditanda)
             if (cell && cell.v !== null && cell.v !== false && cell.v.toString().toUpperCase() !== 'FALSE') {
                 return '<span class="badge badge-hantar">✔ Hantar</span>';
             }
             return '<span class="badge badge-belum">✘ Belum</span>';
         }
 
-        // 3. Tarik data (Fetch) untuk setiap tab
+        // 4. Tarik data secara latar belakang
         tabs.forEach(async (tab) => {
             const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${tab}`;
-            
             try {
                 const response = await fetch(url);
                 const text = await response.text();
-                
-                // Ekstrak format JSON
                 const jsonString = text.substring(47, text.length - 2);
                 const data = JSON.parse(jsonString);
                 
                 let totalStaf = 0;
                 let rowsHtml = '';
                 
-                // Mula membaca baris-baris data
                 data.table.rows.forEach((row, index) => {
-                    // Abaikan baris tajuk (header)
                     if (index === 0 && row.c[1] && row.c[1].v === 'NAMA') return; 
                     
-                    // Semak jika ada nama di lajur B (index 1)
                     if (row.c[1] && row.c[1].v) { 
                         totalStaf++;
                         const nama = row.c[1].v;
-                        
-                        // Semak status untuk lajur C(Kendiri), D(Pertama), E(Kedua)
                         const statusKendiri = semakStatus(row.c[2]); 
                         const statusPertama = semakStatus(row.c[3]);
                         const statusKedua = semakStatus(row.c[4]);
@@ -177,12 +207,10 @@
                     }
                 });
                 
-                // Kemas kini jumlah staf pada butang dropdown
-                document.getElementById(`count-${tab}`).innerText = `${totalStaf} Senarai Nama`;
-                
-                // Masukkan jadual ke dalam dropdown
+                const contentDiv = document.getElementById(`content-${tab}`);
                 if(totalStaf > 0) {
-                    document.getElementById(`content-${tab}`).innerHTML = `
+                    contentDiv.innerHTML = `
+                        <div class="jumlah-staf">Jumlah Staf: ${totalStaf} Orang</div>
                         <table>
                             <thead>
                                 <tr>
@@ -192,20 +220,16 @@
                                     <th>KEDUA</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                ${rowsHtml}
-                            </tbody>
+                            <tbody>${rowsHtml}</tbody>
                         </table>
                     `;
                 } else {
-                    document.getElementById(`content-${tab}`).innerHTML = `<p style="text-align:center;">Tiada data nama ditemui.</p>`;
+                    contentDiv.innerHTML = `<p style="text-align:center;">Tiada data senarai nama.</p>`;
                 }
                 
             } catch (error) {
-                console.error(`Ralat pada tab ${tab}:`, error);
-                document.getElementById(`count-${tab}`).innerText = `Ralat!`;
                 document.getElementById(`content-${tab}`).innerHTML = `
-                    <p style="color:#dc2626; text-align:center;">Gagal memuat turun data. Pastikan pautan Google Sheets ditetapkan kepada 'Public'.</p>
+                    <p style="color:#dc2626; text-align:center;">Ralat! Gagal memuat turun data.</p>
                 `;
             }
         });
