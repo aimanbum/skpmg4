@@ -15,9 +15,14 @@
         .header { text-align: center; margin-bottom: 30px; color: #2c3e50; }
         .logo-img { max-width: 120px; margin-bottom: 15px; }
         .aspek-title { background: #007bff; color: white; padding: 10px 15px; border-radius: 5px; margin-top: 25px; margin-bottom: 15px; font-weight: bold; }
-        .item-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 10px 0; }
+        
+        /* GAYA BARU UNTUK PENERANGAN SKOR */
+        .item-row { display: flex; flex-direction: column; border-bottom: 1px solid #eee; padding: 12px 0; }
+        .item-main { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .item-desc { flex: 1; padding-right: 15px; font-size: 0.95rem; }
         .item-select { width: 80px; }
+        .skor-penerangan { font-size: 0.85rem; color: #495057; margin-top: 8px; display: none; background: #f8f9fa; padding: 8px 12px; border-radius: 5px; border-left: 4px solid #0d6efd; }
+        
         .select2-container--bootstrap-5 .select2-selection { border-color: #dee2e6; }
 
         /* STICKY SCORE BAR */
@@ -47,6 +52,10 @@
         <img src="logo.png" alt="Logo Sekolah" class="logo-img">
         <h3>BORANG PENCERAPAN STANDARD 4</h3>
         <p>SMKA TOK BACHOK</p>
+        <!-- Butang Panduan Rubrik -->
+        <button type="button" class="btn btn-sm btn-outline-info mt-2" data-bs-toggle="modal" data-bs-target="#rubrikModal">
+            ℹ️ Panduan Tahap Skor SKPMg2
+        </button>
     </div>
 
     <form id="skpmgForm">
@@ -292,61 +301,85 @@
         </div>
 
         <div class="aspek-title">4.1.1 GURU SEBAGAI PERANCANG</div>
-        <div class="item-row"><span class="item-desc">a) Menyediakan RPH (Objektif & Aktiviti)</span><select name="s411a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">b) Menentukan kaedah pentaksiran</span><select name="s411b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">c) Menyediakan ABM/BBM/BBB/TMK</span><select name="s411c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">a) Menyediakan RPH (Objektif & Aktiviti)</span><select name="s411a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">b) Menentukan kaedah pentaksiran</span><select name="s411b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">c) Menyediakan ABM/BBM/BBB/TMK</span><select name="s411c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
 
         <div class="aspek-title">4.2.1 GURU SEBAGAI PENGAWAL (PROSES)</div>
-        <div class="item-row"><span class="item-desc">a) Mengelola isi pelajaran/skop</span><select name="s421a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">b) Mengelola masa PdPc</span><select name="s421b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">c) Memberi peluang penyertaan murid</span><select name="s421c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">a) Mengelola isi pelajaran/skop</span><select name="s421a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">b) Mengelola masa PdPc</span><select name="s421b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">c) Memberi peluang penyertaan murid</span><select name="s421c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
 
         <div class="aspek-title">4.2.2 GURU SEBAGAI PENGAWAL (SUASANA)</div>
-        <div class="item-row"><span class="item-desc">a) Mengawasi komunikasi murid</span><select name="s422a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">b) Mengawasi perlakuan murid</span><select name="s422b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">c) Menyusun atur kedudukan murid</span><select name="s422c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">d) Melaksanakan aktiviti menyeronokkan</span><select name="s422d" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">a) Mengawasi komunikasi murid</span><select name="s422a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">b) Mengawasi perlakuan murid</span><select name="s422b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">c) Menyusun atur kedudukan murid</span><select name="s422c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">d) Melaksanakan aktiviti menyeronokkan</span><select name="s422d" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
 
         <div class="aspek-title">4.3.1 GURU SEBAGAI PEMBIMBING</div>
-        <div class="item-row"><span class="item-desc">a) Tunjuk ajar isi pelajaran/konsep</span><select name="s431a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">b) Tunjuk ajar kemahiran aktiviti</span><select name="s431b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">c) Memandu membuat keputusan</span><select name="s431c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">d) Memandu penggunaan sumber</span><select name="s431d" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">e) Menggabung/merentas isi pelajaran</span><select name="s431e" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">a) Tunjuk ajar isi pelajaran/konsep</span><select name="s431a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">b) Tunjuk ajar kemahiran aktiviti</span><select name="s431b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">c) Memandu membuat keputusan</span><select name="s431c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">d) Memandu penggunaan sumber</span><select name="s431d" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">e) Menggabung/merentas isi pelajaran</span><select name="s431e" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
 
         <div class="aspek-title">4.4.1 GURU SEBAGAI PENDORONG (MINDA)</div>
-        <div class="item-row"><span class="item-desc">a) Merangsang murid berkomunikasi</span><select name="s441a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">b) Merangsang murid berkolaboratif</span><select name="s441b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">c) Soalan pemikiran kritis/kreatif</span><select name="s441c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">d) Soalan penyelesaian masalah</span><select name="s441d" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">e) Peluang murid memimpin</span><select name="s441e" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">f) Menggalakkan soalan dari murid</span><select name="s441f" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">g) Menggalakkan pengetahuan kendiri</span><select name="s441g" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">a) Merangsang murid berkomunikasi</span><select name="s441a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">b) Merangsang murid berkolaboratif</span><select name="s441b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">c) Soalan pemikiran kritis/kreatif</span><select name="s441c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">d) Soalan penyelesaian masalah</span><select name="s441d" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">e) Peluang murid memimpin</span><select name="s441e" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">f) Menggalakkan soalan dari murid</span><select name="s441f" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">g) Menggalakkan pengetahuan kendiri</span><select name="s441g" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
 
         <div class="aspek-title">4.4.2 GURU SEBAGAI PENDORONG (EMOSI)</div>
-        <div class="item-row"><span class="item-desc">a) Pujian/galakan perlakuan positif</span><select name="s442a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">b) Penghargaan hasil kerja/idea</span><select name="s442b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">c) Keyakinan tanya soalan/idea</span><select name="s442c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">d) Prihatin keperluan murid</span><select name="s442d" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">a) Pujian/galakan perlakuan positif</span><select name="s442a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">b) Penghargaan hasil kerja/idea</span><select name="s442b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">c) Keyakinan tanya soalan/idea</span><select name="s442c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">d) Prihatin keperluan murid</span><select name="s442d" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
 
         <div class="aspek-title">4.5.1 GURU SEBAGAI PENILAI</div>
-        <div class="item-row"><span class="item-desc">a) Pelbagai kaedah pentaksiran</span><select name="s451a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">b) Aktiviti pemulihan/pengayaan</span><select name="s451b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">c) Memberi latihan/tugasan</span><select name="s451c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">d) Membuat refleksi PdPc</span><select name="s451d" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">e) Menyemak/menilai hasil kerja</span><select name="s451e" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">a) Pelbagai kaedah pentaksiran</span><select name="s451a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">b) Aktiviti pemulihan/pengayaan</span><select name="s451b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">c) Memberi latihan/tugasan</span><select name="s451c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">d) Membuat refleksi PdPc</span><select name="s451d" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">e) Menyemak/menilai hasil kerja</span><select name="s451e" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
 
         <div class="aspek-title">4.6.1 MURID SEBAGAI PEMBELAJAR AKTIF</div>
-        <div class="item-row"><span class="item-desc">a) Respons berkaitan isi pelajaran</span><select name="s461a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">b) Berkomunikasi dalam aktiviti</span><select name="s461b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">c) Kolaboratif dalam aktiviti</span><select name="s461c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">d) Respons pemikiran kritis/kreatif</span><select name="s461d" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">e) Mengemukakan soalan</span><select name="s461e" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">f) Mengaitkan isi dengan kehidupan</span><select name="s461f" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
-        <div class="item-row"><span class="item-desc">g) Membuat keputusan/selesai masalah</span><select name="s461g" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">a) Respons berkaitan isi pelajaran</span><select name="s461a" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">b) Berkomunikasi dalam aktiviti</span><select name="s461b" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">c) Kolaboratif dalam aktiviti</span><select name="s461c" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">d) Respons pemikiran kritis/kreatif</span><select name="s461d" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">e) Mengemukakan soalan</span><select name="s461e" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">f) Mengaitkan isi dengan kehidupan</span><select name="s461f" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
+        <div class="item-row"><div class="item-main"><span class="item-desc">g) Membuat keputusan/selesai masalah</span><select name="s461g" class="form-select item-select score-input"><option value="0">-</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="skor-penerangan"></div></div>
 
         <button type="submit" class="btn btn-primary w-100 mt-4 p-3 fw-bold" id="submitBtn">HANTAR SKOR</button>
     </form>
+</div>
+
+<!-- Modal Panduan Rubrik SKPMg2 -->
+<div class="modal fade" id="rubrikModal" tabindex="-1" aria-labelledby="rubrikModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rubrikModalLabel">Panduan Rubrik SKPMg2 Umum</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tahap kualiti pemarkahan bagi SKPMg2 adalah dinilai berdasarkan kriteria umum berikut:</p>
+        <ul class="list-group">
+            <li class="list-group-item">⭐ <b>Skor 4 (Cemerlang):</b> Tindakan dilaksanakan dengan mengambil kira perkara-perkara (mengikut kriteria) secara menyeluruh / secara konsisten / kreatif.</li>
+            <li class="list-group-item">🟢 <b>Skor 3 (Baik):</b> Tindakan dilaksanakan secara menyeluruh / konsisten tetapi kurang 1 elemen / kurang kreatif.</li>
+            <li class="list-group-item">🟡 <b>Skor 2 (Sederhana):</b> Tindakan dilaksanakan sebahagiannya / tidak menyeluruh / terhad.</li>
+            <li class="list-group-item">🔴 <b>Skor 1 (Lemah):</b> Tindakan tidak dilaksanakan / dilaksanakan pada tahap yang sangat minimum.</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="sticky-score">
@@ -365,57 +398,65 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-    // 1. AKTIFKAN DROPDOWN CARIAN
+    // 1. DATA PENERANGAN SKOR SKPMG2
+    const deskripsiSkor = {
+        "4": "⭐ <b>Tahap 4 (Cemerlang):</b> Dilaksanakan dengan menyeluruh, jelas, sesuai dan kreatif / konsisten.",
+        "3": "🟢 <b>Tahap 3 (Baik):</b> Dilaksanakan dengan menyeluruh, jelas dan sesuai.",
+        "2": "🟡 <b>Tahap 2 (Sederhana):</b> Dilaksanakan sebahagiannya / tidak menyeluruh.",
+        "1": "🔴 <b>Tahap 1 (Lemah):</b> Dilaksanakan pada tahap sangat terhad / tidak mencapai tahap minimum.",
+        "0": ""
+    };
+
+    // 2. AKTIFKAN DROPDOWN CARIAN
     $(document).ready(function() {
         $('#senaraiGuru').select2({ theme: 'bootstrap-5', placeholder: "-- Taip nama guru --", allowClear: true });
         $('#senaraiSubjek').select2({ theme: 'bootstrap-5', placeholder: "-- Cari Subjek --", allowClear: true });
         $('#senaraiKelas').select2({ theme: 'bootstrap-5', placeholder: "-- Cari Kelas --", allowClear: true });
     });
 
-    // 2. FUNGSI AUTO-KIRA PERATUS & SKOR (BERDASARKAN PEMBERATAN)
-    // Formula Wajaran: (Total Skor Aspek / Full Mark Aspek) * Pemberatan
-    
-    function kiraSkor() {
-        let totalRaw = 0; // Untuk paparan JUM SKOR / 152
-        let weightedScore = 0; // Untuk PERATUS %
+    // 3. FUNGSI PAPAR PENERANGAN & AUTO-KIRA
+    $('.score-input').on('change', function() {
+        let val = $(this).val();
+        let peneranganBox = $(this).closest('.item-row').find('.skor-penerangan');
+        
+        if (val !== "0" && val !== "") {
+            peneranganBox.html(deskripsiSkor[val]).slideDown('fast');
+        } else {
+            peneranganBox.slideUp('fast');
+        }
 
-        // Fungsi kecil untuk kira setiap seksyen
+        kiraSkor();
+    });
+
+    function kiraSkor() {
+        let totalRaw = 0; 
+        let weightedScore = 0; 
+
         function kiraAspek(prefix, fullMark, weightage) {
             let sum = 0;
-            // Cari semua input yang mula dengan nama prefix (contoh: s411a, s411b...)
             $(`select[name^="${prefix}"]`).each(function() {
                 let val = parseInt($(this).val()) || 0;
                 sum += val;
             });
             totalRaw += sum;
-            
-            // Formula: (Jumlah / FullMark) * Pemberatan
             return (sum / fullMark) * weightage;
         }
 
-        // --- MULA KIRA SETIAP ASPEK ---
-        weightedScore += kiraAspek('s411', 12, 10); // 4.1.1: (x/12)*10
-        weightedScore += kiraAspek('s421', 12, 10); // 4.2.1: (x/12)*10
-        weightedScore += kiraAspek('s422', 16, 5);  // 4.2.2: (x/16)*5
-        weightedScore += kiraAspek('s431', 20, 15); // 4.3.1: (x/20)*15
-        weightedScore += kiraAspek('s441', 28, 25); // 4.4.1: (x/28)*25
-        weightedScore += kiraAspek('s442', 16, 5);  // 4.4.2: (x/16)*5
-        weightedScore += kiraAspek('s451', 20, 10); // 4.5.1: (x/20)*10
-        weightedScore += kiraAspek('s461', 28, 20); // 4.6.1: (x/28)*20
+        weightedScore += kiraAspek('s411', 12, 10); 
+        weightedScore += kiraAspek('s421', 12, 10); 
+        weightedScore += kiraAspek('s422', 16, 5);  
+        weightedScore += kiraAspek('s431', 20, 15); 
+        weightedScore += kiraAspek('s441', 28, 25); 
+        weightedScore += kiraAspek('s442', 16, 5);  
+        weightedScore += kiraAspek('s451', 20, 10); 
+        weightedScore += kiraAspek('s461', 28, 20); 
 
-        // Kemaskini Paparan
-        $('#displayTotal').text(totalRaw); // Ini tunjuk skor mentah (contoh: 140/152)
-        $('#displayPeratus').text(weightedScore.toFixed(2) + "%"); // Ini tunjuk skor Wajaran
-
-        // Simpan peratus dalam input hidden
+        $('#displayTotal').text(totalRaw); 
+        $('#displayPeratus').text(weightedScore.toFixed(2) + "%"); 
         $('#inputPeratus').val(weightedScore.toFixed(2));
     }
 
-    // Jalankan fungsi setiap kali dropdown berubah
-    $('.score-input').on('change', kiraSkor);
-
-    // 3. SKRIP HANTAR DATA KE GOOGLE SHEETS
-    // URL SCRIPT ANDA
+    // 4. SKRIP HANTAR DATA KE GOOGLE SHEETS
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzEdgCyI1ZPH5k-Xy0oLGPkw-DwcyASphK4BrE71YfGGgF7LzcYLFWyx01ypmKEDHv3mQ/exec'; 
     
     const form = document.getElementById('skpmgForm');
@@ -428,7 +469,6 @@
         if ($('#senaraiSubjek').val() === "") { alert("Sila pilih Mata Pelajaran!"); return; }
         if ($('#senaraiKelas').val() === "") { alert("Sila pilih Kelas!"); return; }
 
-        // Pastikan skor dikira kali terakhir sebelum hantar
         kiraSkor();
 
         btn.disabled = true;
@@ -446,6 +486,9 @@
                 $('#displayTotal').text("0");
                 $('#displayPeratus').text("0.00%");
                 
+                // Tutup semula semua kotak penerangan pop-down
+                $('.skor-penerangan').hide();
+
                 btn.disabled = false;
                 btn.innerText = "HANTAR SKOR";
             })
