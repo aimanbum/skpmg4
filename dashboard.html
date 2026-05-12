@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Semakan Pangisian Skpmg4</title>
+    <title>Dashboard Semakan Pengisian Skpmg4</title>
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -112,7 +112,7 @@
         /* Jadual */
         table { width: 100%; border-collapse: collapse; min-width: 600px; }
         th, td { padding: 14px; text-align: center; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
-        th { background-color: #f1f5f9; color: #334155; font-weight: 600; }
+        th { background-color: #f1f5f9; color: #334155; font-weight: 600; vertical-align: middle; }
         tr:hover { background-color: #f8fafc; }
         .col-nama { text-align: left; font-weight: 500; color: #1e293b; }
         
@@ -133,18 +133,27 @@
             color: #2563eb;
             font-size: 16px;
         }
+
+        /* Lencana Kiraan (Berapa per Berapa) */
+        .stats-count {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 12px;
+            background-color: #e0e7ff;
+            color: #4338ca;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Bahagian Tajuk Utama -->
         <div class="header-section">
             <h2>📊 Dashboard Semakan Pengisian Skpmg4</h2>
             
-            <!-- Butang Pautan Google Drive -->
             <a href="https://drive.google.com/drive/folders/1fXTEuiTwKNm6FHMLZ6XgHQFlMyol6aEb?usp=sharing" target="_blank" class="drive-btn">
-                <!-- SVG Icon Folder -->
                 <svg class="drive-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10 4H4C2.89543 4 2 4.89543 2 6V18C2 19.1046 2.89543 20 4 20H20C21.1046 20 22 19.1046 22 18V8C22 6.89543 21.1046 6 20 6H12L10 4Z" fill="#FACC15" stroke="#EAB308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -152,15 +161,12 @@
             </a>
         </div>
         
-        <!-- Butang Menu Akan Dijana Di Sini -->
         <div class="menu-container" id="menu-container"></div>
         
-        <!-- Mesej Selamat Datang -->
         <div id="welcome-msg">
             👆 Sila pilih kumpulan dari menu di atas untuk memaparkan senarai nama dan status.
         </div>
         
-        <!-- Jadual Akan Dijana Di Sini -->
         <div id="content-container"></div>
     </div>
 
@@ -201,8 +207,13 @@
             document.getElementById(`content-${tabPilihan}`).classList.add('active');
         }
 
+        // Fungsi semak True/False
+        function isHantar(cell) {
+            return (cell && cell.v !== null && cell.v !== false && cell.v.toString().toUpperCase() !== 'FALSE');
+        }
+
         function semakStatus(cell) {
-            if (cell && cell.v !== null && cell.v !== false && cell.v.toString().toUpperCase() !== 'FALSE') {
+            if (isHantar(cell)) {
                 return '<span class="badge badge-hantar">✔ Hantar</span>';
             }
             return '<span class="badge badge-belum">✘ Belum</span>';
@@ -217,6 +228,9 @@
                 const data = JSON.parse(jsonString);
                 
                 let totalStaf = 0;
+                let kiraKendiri = 0;
+                let kiraPertama = 0;
+                let kiraKedua = 0;
                 let rowsHtml = '';
                 
                 data.table.rows.forEach((row, index) => {
@@ -225,6 +239,12 @@
                     if (row.c[1] && row.c[1].v) { 
                         totalStaf++;
                         const nama = row.c[1].v;
+                        
+                        // Tambah kiraan jika sudah hantar
+                        if (isHantar(row.c[2])) kiraKendiri++;
+                        if (isHantar(row.c[3])) kiraPertama++;
+                        if (isHantar(row.c[4])) kiraKedua++;
+
                         const statusKendiri = semakStatus(row.c[2]); 
                         const statusPertama = semakStatus(row.c[3]);
                         const statusKedua = semakStatus(row.c[4]);
@@ -242,15 +262,25 @@
                 
                 const contentDiv = document.getElementById(`content-${tab}`);
                 if(totalStaf > 0) {
+                    // Jadual beserta tajuk yang mempunyai kiraan (stats-count)
                     contentDiv.innerHTML = `
                         <div class="jumlah-staf">Jumlah Staf: ${totalStaf} Orang</div>
                         <table>
                             <thead>
                                 <tr>
                                     <th class="col-nama">NAMA GURU / STAF</th>
-                                    <th>KENDIRI</th>
-                                    <th>PERTAMA</th>
-                                    <th>KEDUA</th>
+                                    <th>
+                                        KENDIRI<br>
+                                        <span class="stats-count">${kiraKendiri} / ${totalStaf}</span>
+                                    </th>
+                                    <th>
+                                        PERTAMA<br>
+                                        <span class="stats-count">${kiraPertama} / ${totalStaf}</span>
+                                    </th>
+                                    <th>
+                                        KEDUA<br>
+                                        <span class="stats-count">${kiraKedua} / ${totalStaf}</span>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>${rowsHtml}</tbody>
