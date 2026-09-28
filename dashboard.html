@@ -67,8 +67,8 @@
             margin-bottom: 20px;
         }
         .menu-btn {
-            padding: 12px 24px;
-            font-size: 15px;
+            padding: 12px 20px;
+            font-size: 14px;
             font-weight: bold;
             color: #475569;
             background-color: #e2e8f0;
@@ -90,8 +90,8 @@
         #welcome-msg {
             text-align: center;
             color: #64748b;
-            font-size: 18px;
-            padding: 40px 20px;
+            font-size: 16px;
+            padding: 30px 20px;
             background: #f8fafc;
             border-radius: 8px;
             border: 2px dashed #cbd5e1;
@@ -99,7 +99,6 @@
         .tab-content {
             display: none; 
             animation: fadeIn 0.4s;
-            overflow-x: auto;
         }
         .tab-content.active {
             display: block; 
@@ -109,8 +108,8 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Jadual */
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        /* Jadual Desktop */
+        table { width: 100%; border-collapse: collapse; }
         th, td { padding: 14px; text-align: center; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
         th { background-color: #f1f5f9; color: #334155; font-weight: 600; vertical-align: middle; }
         tr:hover { background-color: #f8fafc; }
@@ -134,7 +133,7 @@
             font-size: 16px;
         }
 
-        /* Lencana Kiraan (Berapa per Berapa) */
+        /* Lencana Kiraan Desktop */
         .stats-count {
             display: inline-block;
             margin-top: 6px;
@@ -145,14 +144,107 @@
             border-radius: 12px;
             font-weight: bold;
         }
+
+        /* Ringkasan Khas Mobile (Sembunyi secara asas di Desktop) */
+        .mobile-stats {
+            display: none;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+            background: #eff6ff;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #bfdbfe;
+            text-align: center;
+        }
+        .mobile-stat-item {
+            font-size: 11px;
+            color: #1e40af;
+            font-weight: bold;
+        }
+        .mobile-stat-item span {
+            display: block;
+            font-size: 14px;
+            color: #1d4ed8;
+            margin-top: 3px;
+        }
+
+        /* ==========================================
+           REKA BENTUK MESRA MOBILE (RESPONSIVE CSS)
+           ========================================== */
+        @media (max-width: 640px) {
+            body { padding: 10px; }
+            .container { padding: 15px; margin: 5px auto; border-radius: 8px; }
+            .header-section h2 { font-size: 18px; }
+            .drive-btn { width: 100%; justify-content: center; box-sizing: border-box; }
+            
+            /* Menu Butang Susun 3 Lajur di Mobile */
+            .menu-container { gap: 6px; }
+            .menu-btn { 
+                flex: 1 1 calc(33.33% - 6px); 
+                padding: 10px 4px; 
+                font-size: 12px; 
+                text-align: center;
+            }
+
+            /* Paparkan Ringkasan Ringkas di Mobile */
+            .mobile-stats { display: grid; }
+            
+            /* Tukar Jadual menjadi Bentuk Kad */
+            table { display: block; width: 100%; }
+            thead { display: none; } /* Sembunyikan Header Jadual */
+            tbody { display: block; width: 100%; }
+            
+            tr {
+                display: block;
+                background: #ffffff;
+                border: 1px solid #e2e8f0;
+                border-radius: 10px;
+                margin-bottom: 12px;
+                padding: 12px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            }
+            
+            td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 8px 0;
+                border-bottom: 1px dashed #f1f5f9;
+                text-align: right;
+            }
+            td:last-child { border-bottom: none; }
+            
+            /* Tajuk Nama Guru dalam Kad */
+            .col-nama {
+                display: block;
+                font-size: 14px;
+                font-weight: 700;
+                color: #0f172a;
+                border-bottom: 2px solid #e2e8f0;
+                padding-bottom: 8px;
+                margin-bottom: 4px;
+                text-align: left;
+            }
+            
+            /* Label Tambahan di Sebelah Kiri Badge pada Mobile */
+            td[data-label]::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: #64748b;
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
+        <!-- Bahagian Tajuk Utama -->
         <div class="header-section">
             <h2>📊 Dashboard Semakan Pengisian Skpmg4</h2>
             
+            <!-- Butang Pautan Google Drive -->
             <a href="https://drive.google.com/drive/folders/1fXTEuiTwKNm6FHMLZ6XgHQFlMyol6aEb?usp=sharing" target="_blank" class="drive-btn">
                 <svg class="drive-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10 4H4C2.89543 4 2 4.89543 2 6V18C2 19.1046 2.89543 20 4 20H20C21.1046 20 22 19.1046 22 18V8C22 6.89543 21.1046 6 20 6H12L10 4Z" fill="#FACC15" stroke="#EAB308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -161,12 +253,15 @@
             </a>
         </div>
         
+        <!-- Butang Menu Akan Dijana Di Sini -->
         <div class="menu-container" id="menu-container"></div>
         
+        <!-- Mesej Selamat Datang -->
         <div id="welcome-msg">
             👆 Sila pilih kumpulan dari menu di atas untuk memaparkan senarai nama dan status.
         </div>
         
+        <!-- Jadual Akan Dijana Di Sini -->
         <div id="content-container"></div>
     </div>
 
@@ -240,7 +335,6 @@
                         totalStaf++;
                         const nama = row.c[1].v;
                         
-                        // Tambah kiraan jika sudah hantar
                         if (isHantar(row.c[2])) kiraKendiri++;
                         if (isHantar(row.c[3])) kiraPertama++;
                         if (isHantar(row.c[4])) kiraKedua++;
@@ -252,9 +346,9 @@
                         rowsHtml += `
                             <tr>
                                 <td class="col-nama">${nama}</td>
-                                <td>${statusKendiri}</td>
-                                <td>${statusPertama}</td>
-                                <td>${statusKedua}</td>
+                                <td data-label="KENDIRI">${statusKendiri}</td>
+                                <td data-label="PERTAMA">${statusPertama}</td>
+                                <td data-label="KEDUA">${statusKedua}</td>
                             </tr>
                         `;
                     }
@@ -262,9 +356,16 @@
                 
                 const contentDiv = document.getElementById(`content-${tab}`);
                 if(totalStaf > 0) {
-                    // Jadual beserta tajuk yang mempunyai kiraan (stats-count)
                     contentDiv.innerHTML = `
                         <div class="jumlah-staf">Jumlah Staf: ${totalStaf} Orang</div>
+                        
+                        <!-- Ringkasan Angka Khas Mobile -->
+                        <div class="mobile-stats">
+                            <div class="mobile-stat-item">KENDIRI <span>${kiraKendiri} / ${totalStaf}</span></div>
+                            <div class="mobile-stat-item">PERTAMA <span>${kiraPertama} / ${totalStaf}</span></div>
+                            <div class="mobile-stat-item">KEDUA <span>${kiraKedua} / ${totalStaf}</span></div>
+                        </div>
+
                         <table>
                             <thead>
                                 <tr>
