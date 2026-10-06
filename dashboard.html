@@ -32,7 +32,16 @@
             margin: 0 0 15px 0;
         }
 
-        /* Gaya Butang Pautan Google Drive */
+        /* Bekas Butang Tajuk (Header Button Container) */
+        .header-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* Gaya Butang Pautan */
         .drive-btn {
             display: inline-flex;
             align-items: center;
@@ -244,13 +253,24 @@
         <div class="header-section">
             <h2>📊 Dashboard Semakan Pengisian Skpmg4</h2>
             
-            <!-- Butang Pautan Google Drive -->
-            <a href="https://drive.google.com/drive/folders/1fXTEuiTwKNm6FHMLZ6XgHQFlMyol6aEb?usp=sharing" target="_blank" class="drive-btn">
-                <svg class="drive-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 4H4C2.89543 4 2 4.89543 2 6V18C2 19.1046 2.89543 20 4 20H20C21.1046 20 22 19.1046 22 18V8C22 6.89543 21.1046 6 20 6H12L10 4Z" fill="#FACC15" stroke="#EAB308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Softcopy Borang Skpmg4
-            </a>
+            <div class="header-buttons">
+                <!-- Butang Pautan Google Drive -->
+                <a href="https://drive.google.com/drive/folders/1fXTEuiTwKNm6FHMLZ6XgHQFlMyol6aEb?usp=sharing" target="_blank" class="drive-btn">
+                    <svg class="drive-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 4H4C2.89543 4 2 4.89543 2 6V18C2 19.1046 2.89543 20 4 20H20C21.1046 20 22 19.1046 22 18V8C22 6.89543 21.1046 6 20 6H12L10 4Z" fill="#FACC15" stroke="#EAB308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Softcopy Borang Skpmg4
+                </a>
+
+                <!-- Butang Pengisian Instrumen SKPMG4 -->
+                <a href="https://aimanbum.github.io/skpmg4/" target="_blank" class="drive-btn">
+                    <svg class="drive-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" fill="#3B82F6" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M14 2V8H20" stroke="#1D4ED8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    PENGISIAN INSTRUMEN SKPMG4
+                </a>
+            </div>
         </div>
         
         <!-- Butang Menu Akan Dijana Di Sini -->
